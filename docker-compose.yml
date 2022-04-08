@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  web:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    depends_on:
+        - db
+
+
+# I had problem with /usr/bin/env: 'node': Permission denied this why added 
+# server/node_modules volume
