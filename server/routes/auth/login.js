@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 router.post("/", (req, res) => {
+    
 })
 
-module.exports = router;
+module.exports = router

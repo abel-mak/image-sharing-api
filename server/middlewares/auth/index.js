@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const {Fail, Success} = require("../../helper/response");
 
 module.exports = (req, res) => {
     try {
@@ -7,17 +8,18 @@ module.exports = (req, res) => {
         if (token) {
             jwt.verify(token, process.env.SECRET, (err, decoded) => {
                 if (err)
-                    res.status(403).json({ code: 403, error: true });
+                    res.status(401).json(new Fail(401, "unauthorized"));
                 req.userId = decoded.userId;
+                
                 next();
             })
         }
         else {
-            res.status(401).json({ code: 401, error: true });
+            res.status(400).json(new Fail(400, "bad request"));
         }
     }
     catch (e) {
         console.log(e);
-        res.status(500).json({ code: 500, error: true});
+        res.status(500).json(new Fail(500, "internal error server"));
     }
 }
