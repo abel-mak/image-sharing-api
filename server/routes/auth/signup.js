@@ -8,7 +8,7 @@ const { Fail, Success } = require("../../helper/response");
 router.post("/", signupValidator, async (req, res) => {
     try {
         const saltRounds = 10;
-        const { firstName, lastName, username, password } = req.body;
+        const { firstName, lastName, username, password } = req.newUser;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const user = await User.create({ firstName, lastName, username, password: hashedPassword });

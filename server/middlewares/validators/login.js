@@ -4,14 +4,12 @@ const { Fail } = require("../../helper/response");
 module.exports = async (req, res, next) => {
     try {
         const schema = Joi.object({
-            firstName: Joi.string().trim().regex(/[a-zA-Z ]+/).min(3).max(20).required(),
-            lastName: Joi.string().trim().regex(/[a-zA-Z ]+/).min(3).max(20).required(),
-            password: Joi.string().min(8).required(),
             username: Joi.string().regex(/^[a-zA-Z0-9_]+/).min(3).max(30).required(),
+            password: Joi.string().required()
         });
         const value = await schema.validateAsync(req.body);
         
-        req.newUser = value; 
+        req.user = value;
         next();
     }
     catch (e) {
