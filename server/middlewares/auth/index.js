@@ -1,16 +1,19 @@
 const jwt = require("jsonwebtoken");
 const {Fail, Success} = require("../../helper/response");
+require("dotenv").config();
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
     try {
-        const token = req.header("authorization").split(" ")[1];
+        if (!req.header("authorization"))
+            res.status(400).json(new Fail(400, "bad request"));
+        
+        const token = req.header("authorization").split(" ")[1]; 
 
         if (token) {
             jwt.verify(token, process.env.SECRET, (err, decoded) => {
                 if (err)
                     res.status(401).json(new Fail(401, "unauthorized"));
                 req.userId = decoded.userId;
-                
                 next();
             })
         }
