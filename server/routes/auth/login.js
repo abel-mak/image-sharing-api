@@ -6,6 +6,8 @@ const loginValidator = require("../../middlewares/validators/login");
 const User = require("../../models").User;
 const { Fail, Success } = require("../../helper/response");
 
+require("dotenv").config();
+
 router.post("/", loginValidator, async (req, res) => {
     try {
         const { username, password } = req.user;
@@ -13,11 +15,10 @@ router.post("/", loginValidator, async (req, res) => {
             where: {
                 username
             }
-        });
-        
+        });    
         const result = await bcrypt.compare(password, tmpUser.password); 
         if (result) {
-            const token = jwt.sign({userId: tmpUser.id}, "SECRET");
+            const token = jwt.sign({userId: tmpUser.id}, process.env.SECRET);
 
             return res.status(200).json(new Success(200, null, {token}));
         }
