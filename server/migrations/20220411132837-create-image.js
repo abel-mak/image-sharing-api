@@ -17,7 +17,7 @@ module.exports = {
           as: 'userId'
         }
       },
-      imagePath: {
+      path: {
         allowNull: false,
         type: Sequelize.STRING
       },
