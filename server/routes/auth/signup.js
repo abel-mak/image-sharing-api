@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const signupValidator = require("../../middlewares/validators/signup");
 const { Fail, Success } = require("../../helper/response");
+const ERROR = require("../../helper/error");
 
 router.post("/", signupValidator, async (req, res) => {
     try {
@@ -16,7 +17,7 @@ router.post("/", signupValidator, async (req, res) => {
     }
     catch (e) {
         console.log(e);
-        res.status(500).json(new Fail(500, "internal server error"));
+        res.status(500).json(new Fail(500, ERROR[500]));
     }
 })
 
