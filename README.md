@@ -8,3 +8,20 @@ A node service that allows users to upload and share images
 - sequelize
 - json web token
 - joi
+
+# Requirements
+- docker
+- docker-compose
+
+# How to run
+- clone the repository
+```
+git clone https://github.com/abel-mak/image-sharing-api.git
+cd server
+```
+- rename env.example to env
+- run the app using this command at the root of the project
+```
+docker-compose up
+```
+by default the app should run at port 3000
