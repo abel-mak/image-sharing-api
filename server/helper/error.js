@@ -1,5 +1,6 @@
 module.exports = {
     400: "Bad Request",
     404: "Not Found",
-    500:"Internal Server Error",
+    500: "Internal Server Error",
+    403: "Forbidden"
 }

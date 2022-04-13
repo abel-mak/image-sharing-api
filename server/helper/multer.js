@@ -1,4 +1,5 @@
 const multer = require("multer");
+const crypto = require("crypto");
 
 const storage = multer.diskStorage({
     destination: "uploads",
@@ -23,7 +24,6 @@ const upload = multer({
         else {
             const error = new multer.MulterError("", file);
             error.message = "Invalid file type";
-
             cb(error);
         }
     }
