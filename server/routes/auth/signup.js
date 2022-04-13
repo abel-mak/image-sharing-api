@@ -12,7 +12,13 @@ router.post("/", signupValidator, async (req, res) => {
         const { firstName, lastName, username, password } = req.newUser;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        const user = await User.create({ firstName, lastName, username, password: hashedPassword });
+        const user = await User.create({
+            firstName,
+            lastName,
+            username,
+            password: hashedPassword,
+            role: "user"
+        });
         res.status(201).json(new Success(201, "user created successfully"));
     }
     catch (e) {

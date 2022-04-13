@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const multer = require("multer");
-const crypto = require("crypto");
 const { Fail, Success } = require("../../helper/response");
 const authMiddleware = require("../../middlewares/auth");
 const ERROR = require("../../helper/error");
@@ -28,14 +27,46 @@ router.post("/new", authMiddleware, (req, res) => {
                     res.status(500).json(new Fail(500, ERROR[500]));
                 }
             }
-            else {
+            else if (req.file) {
                 const userId = req.userId;
                 const { path } = req.file;
                 console.log(userId, path);
                 const image = await Image.create({ userId, path });
                 res.json(req.file);
             }
+            else {
+                res.status(400).json(new Fail(400, ERROR[400]));
+            }
         });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).json(new Fail(500, ERROR[500]));
+    }
+});
+
+router.delete("/remove/:imageId", authMiddleware, async (req, res) => {
+    try {
+        const imageId = req.params.imageId;
+        const image = await Image.findOne({
+            where: {
+                id: imageId
+            },
+            raw: true,
+        });
+
+        if (image) {
+            if (image.userId != req.userId)
+                return res.status(403).json(new Fail(403, ERROR[403]));
+            else {
+                await Image.destroy({
+                    where: {
+                        id: imageId
+                    }
+                });
+            }
+        }
+        res.status(200).json(new Success(200, "resource deleted successfully"));
     }
     catch (e) {
         console.log(e);

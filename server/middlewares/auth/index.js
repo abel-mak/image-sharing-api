@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
                 if (err)
                     res.status(401).json(new Fail(401, ERROR[401]));
                 req.userId = decoded.userId;
+                req.role = decoded.role;
                 next();
             })
         }
