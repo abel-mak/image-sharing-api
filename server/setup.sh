@@ -1,4 +1,4 @@
-until mysql -u root -h db --password=$MYSQL_ROOT_PASSWORD 2> /dev/null; do 
+until mysql -u root -h db --password=$MYSQL_ROOT_PASSWORD 2> /dev/null; do
     sleep 1
 done
 
