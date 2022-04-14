@@ -5,6 +5,8 @@ const authMiddleware = require("../../middlewares/auth");
 const ERROR = require("../../helper/error");
 const Image = require("../../models").Image;
 const { upload } = require("../../helper/multer");
+const fs = require("fs");
+const path = require("path");
 
 router.get("/", authMiddleware, async (req, res) => {
     try {
@@ -30,7 +32,6 @@ router.post("/new", authMiddleware, (req, res) => {
             else if (req.file) {
                 const userId = req.userId;
                 const { path } = req.file;
-                console.log(userId, path);
                 const image = await Image.create({ userId, path });
                 res.json(req.file);
             }
@@ -38,6 +39,25 @@ router.post("/new", authMiddleware, (req, res) => {
                 res.status(400).json(new Fail(400, ERROR[400]));
             }
         });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).json(new Fail(500, ERROR[500]));
+    }
+});
+
+router.get("/:imageId", authMiddleware, async (req, res) => {
+    try {
+        const imageId = req.params.imageId;
+        const image = await Image.findOne({
+            where:{
+                id:imageId
+            }
+        });
+        if (image)
+            res.status(200).json(new Success(200, null, image));
+        else
+            res.status(404).json(new Fail(404, ERROR[404]));
     }
     catch (e) {
         console.log(e);

@@ -6,7 +6,7 @@ require("dotenv").config();
 module.exports = (req, res, next) => {
     try {
         if (!req.header("authorization"))
-            res.status(400).json(new Fail(400, ERROR[400]));
+            return res.status(401).json(new Fail(401, ERROR[401]));
         const token = req.header("authorization").split(" ")[1];
 
         if (token) {
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
             })
         }
         else {
-            res.status(400).json(new Fail(400, ERROR[400]));
+            res.status(401).json(new Fail(401, ERROR[401]));
         }
     }
     catch (e) {
