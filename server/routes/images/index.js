@@ -15,7 +15,6 @@ router.get("/", authMiddleware, async (req, res) => {
         res.status(500).json(new Fail(500, ERROR[500]));
     }
 });
-
 // req.file contains file information 
 
 router.post("/new", authMiddleware, (req, res) => {
