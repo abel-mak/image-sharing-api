@@ -1,5 +1,5 @@
 # image-sharing-api
-A node service that allows users to upload and share images
+A node application that allows users to upload and share images
 
 # Built with
 - nodejs
