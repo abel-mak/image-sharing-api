@@ -3,8 +3,8 @@ until mysql -u root -h db --password=$MYSQL_ROOT_PASSWORD 2> /dev/null; do
 done
 
 mysql -u root -h db --password=$MYSQL_ROOT_PASSWORD -e \
- "CREATE DATABASE IF NOT EXISTS database_development"
+ "CREATE DATABASE IF NOT EXISTS database_production"
  
-./node_modules/.bin/sequelize-cli  db:migrate
-./node_modules/.bin/sequelize-cli db:seed:all
-./node_modules/.bin/nodemon -L --inspect=0.0.0.0 app.js
+npx sequelize-cli  db:migrate
+npx sequelize-cli db:seed:all
+npm start

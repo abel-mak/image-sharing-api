@@ -2,7 +2,7 @@ FROM debian
 
 SHELL ["/bin/bash", "-c"]
 
-COPY ./server /server
+COPY . /server
 
 RUN apt update \
 && apt install -y curl mariadb-client
@@ -13,4 +13,4 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
 
 WORKDIR server
 RUN source ~/.bashrc && npm install
-CMD source ~/.bashrc && ./setup_dev.sh
+CMD source ~/.bashrc && chmod +x setup.sh &&./setup.sh

@@ -6,10 +6,15 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
   web:
-    build: ./server
+    build: .
     ports:
       - ${PORT}:${PORT}
+    volumes:
+      - ./server:/server
+      - /server/node_modules
     environment:
       - MYSQL_ROOT_PASSWORD=password
     depends_on:
         - db
+# I had problem with /usr/bin/env: 'node': Permission denied this why added 
+# server/node_modules volume
