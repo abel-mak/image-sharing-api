@@ -16,6 +16,8 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
+// req.file contains file information 
+
 router.post("/new", authMiddleware, (req, res) => {
     try {
         upload.single("image")(req, res, async (err) => {
@@ -31,7 +33,8 @@ router.post("/new", authMiddleware, (req, res) => {
                 const userId = req.userId;
                 const { path } = req.file;
                 const image = await Image.create({ userId, path });
-                res.json(req.file);
+                res.status(200).json(new Success(200, null, { path }));
+                // res.json(req.file);
             }
             else {
                 res.status(400).json(new Fail(400, ERROR[400]));
@@ -48,8 +51,8 @@ router.get("/:imageId", authMiddleware, async (req, res) => {
     try {
         const imageId = req.params.imageId;
         const image = await Image.findOne({
-            where:{
-                id:imageId
+            where: {
+                id: imageId
             }
         });
         if (image)
