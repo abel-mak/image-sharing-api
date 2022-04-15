@@ -5,8 +5,6 @@ const authMiddleware = require("../../middlewares/auth");
 const ERROR = require("../../helper/error");
 const Image = require("../../models").Image;
 const { upload } = require("../../helper/multer");
-const fs = require("fs");
-const path = require("path");
 
 router.get("/", authMiddleware, async (req, res) => {
     try {

@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.use("/signup", signup);
 router.use("/login", login);
-router.use("/logout", logout);
+// router.use("/logout", logout);
 
 module.exports = router;
