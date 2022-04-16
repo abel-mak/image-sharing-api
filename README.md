@@ -47,6 +47,7 @@ curl --location --request POST 'localhost:3000/auth/login' \
     "username": "username1",
     "password": "password"
 }'
+```
 - upload
 ```
 curl --location --request POST 'localhost:3000/images/new' \
